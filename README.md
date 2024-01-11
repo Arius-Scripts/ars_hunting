@@ -33,7 +33,7 @@ Get ready for the hunt with Ars Advanced Hunting! Explore the wild, track animal
 [Preview](https://youtu.be/cAl0gpgusGw)
 
 :globe_with_meridians: **Cfx Forums**
-[Forums](https://forum.cfx.re/t/free-esx-qbcore-arius-ambulancejob/5184085)
+[Forums](https://forum.cfx.re/t/free-esx-qb-ars-advanced-hunting/5200877)
 
 :speech_balloon: **Join our discord**
 [Discord](https://discord.gg/TkjDhjyeSe)
