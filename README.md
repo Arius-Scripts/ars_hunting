@@ -19,6 +19,7 @@ Get ready for the hunt with Ars Advanced Hunting! Explore the wild, track animal
 -   Rarity Based Harvest Drops.
 -   Rare Extra Drops.
 -   Animal Tracking System.
+-   Target Support
 -   Bait System.
 -   Campfire to cook food.
 -   Integrated shops.
