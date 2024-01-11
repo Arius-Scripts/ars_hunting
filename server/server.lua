@@ -45,10 +45,7 @@ end)
 RegisterNetEvent("ars_hunting:takeCampfire", function(data)
     local sourcePed = GetPlayerPed(source)
 
-    if #(GetEntityCoords(sourcePed) - data.coords) > 4.0 then
-        return print(
-            "ARS HUNTING >> PLAYER MIGHT BE CHEATING ID: " .. source)
-    end
+    if #(GetEntityCoords(sourcePed) - data.coords) > 4.0 then return print("ARS HUNTING >> PLAYER MIGHT BE CHEATING ID: " .. source) end
     framework.addItems({ target = source, items = Config.Campfire.campfireItem })
 end)
 
@@ -110,6 +107,5 @@ end)
 lib.callback.register('ars_hunting:hasItems', function(source, items)
     return framework.hasItems({ target = source, items = items })
 end)
-
 
 lib.versionCheck('Arius-Development/ars_hunting')
