@@ -30,7 +30,7 @@ Get ready for the hunt with Ars Advanced Hunting! Explore the wild, track animal
 [Download](https://github.com/Arius-Scripts/ars_hunting)
 
 :link: **Video Preview:**
-[Preview](https://youtu.be/q59_st6iuQU)
+[Preview]([https://youtu.be/q59_st6iuQU](https://youtu.be/cAl0gpgusGw))
 
 :globe_with_meridians: **Cfx Forums**
 [Forums](https://forum.cfx.re/t/free-esx-qbcore-arius-ambulancejob/5184085)
