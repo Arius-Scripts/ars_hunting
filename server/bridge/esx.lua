@@ -22,7 +22,7 @@ function framework.hasItems(data)
     if type(data.items) == "table" then
         for _, item in pairs(data.items) do
             local hasItem = xPlayer.getInventoryItem(item.item)
-
+            if not hasItem then return false end
 
             if hasItem.count >= item.quantity then return true end
         end
