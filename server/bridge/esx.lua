@@ -16,6 +16,21 @@ function framework.addItems(data)
     end
 end
 
+function framework.hasMoney(target)
+    local xPlayer = ESX.GetPlayerFromId(target)
+    return xPlayer.getMoney()
+end
+
+function framework.addMoney(data)
+    local xPlayer = ESX.GetPlayerFromId(data.target)
+    xPlayer.addMoney(data.amount)
+end
+
+function framework.removeMoney(data)
+    local xPlayer = ESX.GetPlayerFromId(data.target)
+    xPlayer.removeMoney(data.amount)
+end
+
 function framework.hasItems(data)
     local xPlayer = ESX.GetPlayerFromId(data.target)
 

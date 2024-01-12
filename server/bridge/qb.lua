@@ -16,6 +16,21 @@ function framework.addItems(data)
     end
 end
 
+function framework.hasMoney(target)
+    local xPlayer = QBCore.Functions.GetPlayer(target)
+    return xPlayer.PlayerData.money.cash
+end
+
+function framework.addMoney(data)
+    local xPlayer = QBCore.Functions.GetPlayer(data.target)
+    xPlayer.Functions.AddMoney('cash', data.amount)
+end
+
+function framework.removeMoney(data)
+    local xPlayer = QBCore.Functions.GetPlayer(data.target)
+    xPlayer.Functions.RemoveMoney('cash', data.amount)
+end
+
 function framework.hasItems(data)
     local xPlayer = QBCore.Functions.GetPlayer(data.target)
 

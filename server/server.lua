@@ -53,8 +53,8 @@ end)
 RegisterNetEvent("ars_hunting:sellBuyItem", function(data)
     local source = source
     if data.buy then
-        if framework.hasItems({ target = source, items = { { item = "money", quantity = data.price } } }) then
-            framework.removeItem({ target = source, item = "money", count = data.price })
+        if framework.hasMoney(source) >= data.price then
+            framework.removeMoney({ target = source, amount = data.price })
             framework.addItems({ target = source, items = { { item = data.item, quantity = data.quantity } } })
         else
             TriggerClientEvent("ars_hunting:showNotification", source, locale("not_enough_money"))
@@ -62,7 +62,7 @@ RegisterNetEvent("ars_hunting:sellBuyItem", function(data)
     else
         if framework.hasItems({ target = source, items = { { item = data.item, quantity = data.quantity } } }) then
             framework.removeItem({ target = source, item = data.item, count = data.quantity })
-            framework.addItems({ target = source, items = { { item = "money", quantity = data.price } } })
+            framework.addMoney({ target = source, amount = data.price })
         else
             TriggerClientEvent("ars_hunting:showNotification", source, locale("not_enough_item"))
         end
