@@ -123,7 +123,8 @@ local function spawnEntities()
 
                             if dist <= (tracker and 400.0 or 30.0) then
                                 sleep = 0
-                                DrawMarker(tracker and 1 or 23, entityCoords.x, entityCoords.y, entityCoords.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.2, 2.0, tracker and 100.0 or 1.0, marker.color.r, marker.color.g, marker.color.b, tracker and 155 or marker.color.a, false, true, 2, false, nil, nil, false)
+                                DrawMarker(tracker and 1 or 23, entityCoords.x, entityCoords.y, entityCoords.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.2, 2.0, tracker and 100.0 or 1.0, marker.color.r, marker.color.g, marker.color.b, tracker and 155 or marker.color.a, false, true, 2, false, nil, nil,
+                                    false)
                             end
                         end
 
@@ -346,13 +347,17 @@ local function trackAnimal()
 
             SetTimeout(Config.DelayBetweenTracks * 1000, function()
                 canTrack = true
-                entities[closestEntityIndex].track = nil
+                if entities[closestEntityIndex] then
+                    entities[closestEntityIndex].track = nil
+                end
             end)
 
             SetTimeout(Config.TrackingDuration * 1000, function()
                 DisplayRadar(false)
                 canTrack = true
-                entities[closestEntityIndex].track = nil
+                if entities[closestEntityIndex] then
+                    entities[closestEntityIndex].track = nil
+                end
             end)
 
             utils.showNotification(locale("animal_tracked"))
