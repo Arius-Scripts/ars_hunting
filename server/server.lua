@@ -1,17 +1,21 @@
 function getRarity(items)
     local chance = math.random(1, 100)
-    local itemToGive = nil
+    local eligibleItems = {}
 
     for _, item in pairs(items) do
         if item.chance >= chance then
-            itemToGive = item
-            break
+            print(item.item, item.chance, chance)
+            table.insert(eligibleItems, item)
         end
     end
 
-    if itemToGive then return itemToGive end
-
-    return getRarity(items)
+    if #eligibleItems > 0 then
+        local selectedIdx = math.random(1, #eligibleItems)
+        print(selectedIdx)
+        return eligibleItems[selectedIdx]
+    else
+        return getRarity(items)
+    end
 end
 
 RegisterNetEvent("ars_hunting:harvestAnimal", function(data)
