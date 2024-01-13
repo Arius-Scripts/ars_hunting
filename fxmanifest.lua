@@ -25,6 +25,7 @@ client_scripts {
     'client/campfire.lua',
     'client/shops.lua',
     'client/missions.lua',
+    'client/aimblock.lua',
 
 }
 

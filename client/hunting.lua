@@ -16,16 +16,24 @@ end
 
 lib.onCache('weapon', function(value)
     if value then
-        if currentZone and currentZone.allowedWeapons then
-            if not utils.validWeapon(currentZone.allowedWeapons, value) then
-                lib.alertDialog({
-                    header = locale("weapon_not_allowed_title"),
-                    content = locale("weapon_not_allowed_content"),
-                    centered = true,
-                    cancel = false
-                })
+        if currentZone then
+            if Config.UseAimBlock then
+                if utils.validWeapon(Config.WeaponsToBlock, value) then
+                    aimBlock()
+                end
+            end
 
-                disableWeapon()
+            if currentZone.allowedWeapons then
+                if not utils.validWeapon(currentZone.allowedWeapons, value) then
+                    lib.alertDialog({
+                        header = locale("weapon_not_allowed_title"),
+                        content = locale("weapon_not_allowed_content"),
+                        centered = true,
+                        cancel = false
+                    })
+
+                    disableWeapon()
+                end
             end
         end
     end

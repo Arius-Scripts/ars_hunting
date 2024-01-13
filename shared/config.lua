@@ -11,8 +11,11 @@ Config.TrackingDuration = 60      -- seconds
 Config.DelayBetweenTracks = 120   -- seconds
 Config.TrackingFailureChance = 20 -- [1 - 100]
 
-Config.BlockDeath = true -- change to false to disable 
-Config.HuntingRifle = `weapon_huntingrifle` --Add the name of your hunting weapon to stop people being able to shoot each other with it (optional)
+Config.UseAimBlock = true         -- disable shooting at players
+Config.WeaponsToBlock = {         -- weapons that are disabled to shoot at players
+    `WEAPON_HEAVYSNIPER_MK2`,
+    -- `WEAPON_HEAVYSNIPER`,
+}
 
 Config.BaitItem = "huntingbait"
 Config.BaitAttractionDistance = 100.0 -- in 200 radius it will atract an animal
