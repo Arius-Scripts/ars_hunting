@@ -25,8 +25,8 @@ local function aimBlock()
 end
 
 CreateThread(function()
-    local huntingrifle = `weapon_huntingrifle`
-    while true do
+    local huntingrifle = Config.HuntingRifle
+    while Config.BlockDeath do
         Wait(0)
         if GetSelectedPedWeapon(PlayerPedId()) == huntingrifle then
             hasHuntingRifle = true
