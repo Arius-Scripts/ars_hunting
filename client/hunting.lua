@@ -274,9 +274,14 @@ for zoneName, zoneData in pairs(Config.HuntingZones) do
         debug = Config.Debug
     })
 
-    if zoneData.blip.enable then
-        utils.createZoneBlip({ coords = zoneData.coords, radius = zoneData.radius, color = zoneData.blip.color, alpha = zoneData.blip.opacity })
+    if zoneData.zone_radius.enable then
+        utils.createZoneBlip({ coords = zoneData.coords, radius = zoneData.radius, color = zoneData.zone_radius.color, alpha = zoneData.zone_radius.opacity })
         utils.debug("Zone Blip Created")
+    end
+    if zoneData.blip.enable then
+        zoneData.blip.pos = zoneData.coords
+        utils.createBlip(zoneData.blip)
+        utils.debug("Blip Created")
     end
 
     function zone:onEnter()

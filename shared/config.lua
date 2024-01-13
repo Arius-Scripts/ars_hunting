@@ -79,10 +79,17 @@ Config.HuntingZones = {
         radius = 200.0,
         maxSpawns = 5,                                                  -- max animals spawned at one time
         allowedWeapons = { "WEAPON_HEAVYSNIPER_MK2", "WEAPON_DAGGER" }, -- nil if you want to allow every weapon
-        blip = {
+        zone_radius = {
             enable = true,
             color = 1,
             opacity = 128,
+        },
+        blip = {
+            enable = true,
+            name = 'Hunting Zone',
+            type = 141,
+            scale = 1.0,
+            color = 0,
         },
         animals = {
             {
