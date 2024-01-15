@@ -1,4 +1,4 @@
-local currentZone = nil
+currentZone = nil
 local spawnedEntities = 0
 entities = {}
 
