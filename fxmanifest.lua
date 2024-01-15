@@ -6,6 +6,8 @@ use_fxv2_oal 'yes'
 lua54 'yes'
 game 'gta5'
 version '1.0.0'
+author 'Arius Scripts'
+
 
 --#--
 --Manifest--
@@ -23,6 +25,7 @@ client_scripts {
     'client/campfire.lua',
     'client/shops.lua',
     'client/missions.lua',
+    'client/aimblock.lua',
 
 }
 

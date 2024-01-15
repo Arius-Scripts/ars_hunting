@@ -2,7 +2,7 @@ lib.locale()
 
 Config = {}
 Config.Debug = false
-Config.Target = nil       -- only supporting ox_target and qb-target | nil to disable targeting
+Config.Target = nil               -- only supporting ox_target and qb-target | nil to disable targeting
 Config.SpawnDelay = 1             -- seconds [how much time it should take between spawning animals]
 Config.DeleteEntityRadius = 300.0 -- will delete animal if your 400 meters away from them
 
@@ -10,6 +10,12 @@ Config.TrackerItem = "animal_tracker"
 Config.TrackingDuration = 60      -- seconds
 Config.DelayBetweenTracks = 120   -- seconds
 Config.TrackingFailureChance = 20 -- [1 - 100]
+
+Config.UseAimBlock = true         -- disable shooting at players
+Config.WeaponsToBlock = {         -- weapons that are disabled to shoot at players
+    `WEAPON_HEAVYSNIPER_MK2`,
+    -- `WEAPON_HEAVYSNIPER`,
+}
 
 Config.BaitItem = "huntingbait"
 Config.BaitAttractionDistance = 100.0 -- in 200 radius it will atract an animal
@@ -42,7 +48,19 @@ Config.Campfire = {
                     item = "raw_meat",
                 },
             }
-        }
+        },
+        -- {
+        --     label = "Cooked meat",
+        --     give = "cooked_meat",
+        --     cookTime = 5, -- seconds
+        --     require = {
+        --         {
+        --             label = "Raw Meat",
+        --             quantity = 1,
+        --             item = "raw_meat",
+        --         },
+        --     }
+        -- },
     }
 }
 
@@ -61,10 +79,17 @@ Config.HuntingZones = {
         radius = 200.0,
         maxSpawns = 5,                                                  -- max animals spawned at one time
         allowedWeapons = { "WEAPON_HEAVYSNIPER_MK2", "WEAPON_DAGGER" }, -- nil if you want to allow every weapon
-        blip = {
+        zone_radius = {
             enable = true,
             color = 1,
             opacity = 128,
+        },
+        blip = {
+            enable = true,
+            name = 'Hunting Zone',
+            type = 141,
+            scale = 1.0,
+            color = 0,
         },
         animals = {
             {
@@ -117,6 +142,11 @@ Config.HuntingZones = {
                             chance = 100,
                             maxQuantity = 10,
                         },
+                        -- {
+                        --     item = "raw_meat",
+                        --     chance = 100,
+                        --     maxQuantity = 10,
+                        -- },
                     },
                     extra = { -- rare items
                         {
@@ -124,12 +154,244 @@ Config.HuntingZones = {
                             chance = 30,
                             maxQuantity = 1,
                         },
+                        -- {
+                        --     item = "deer_horn",
+                        --     chance = 30,
+                        --     maxQuantity = 1,
+                        -- },
                     }
 
                 }
             },
+            -- {
+            --     model = "a_c_deer",
+            --     chance = 80, -- chance of spawning
+            --     harvestTime = 5,
+            --     harvestWeapons = { "WEAPON_DAGGER" },
+            --     blip = {
+            --         enable = true,
+            --         name = 'Deer',
+            --         type = 8,
+            --         scale = 0.8,
+            --         color = 1,
+            --     },
+            --     marker = {
+            --         enable = true,
+            --         color = { r = 196, g = 136, b = 77, a = 150 }
+            --     },
+            --     items = {
+            --         skins = {
+            --             {
+            --                 item = "skin_deer_ruined",
+            --                 chance = 70,
+            --                 maxQuantity = 1,
+            --             },
+            --             {
+            --                 item = "skin_deer_low",
+            --                 chance = 50,
+            --                 maxQuantity = 1,
+            --             },
+            --             {
+            --                 item = "skin_deer_medium",
+            --                 chance = 30,
+            --                 maxQuantity = 1,
+            --             },
+            --             {
+            --                 item = "skin_deer_good",
+            --                 chance = 25,
+            --                 maxQuantity = 1,
+            --             },
+            --             {
+            --                 item = "skin_deer_perfect",
+            --                 chance = 5,
+            --                 maxQuantity = 1,
+            --             },
+            --         },
+            --         meat = {
+            --             {
+            --                 item = "raw_meat",
+            --                 chance = 100,
+            --                 maxQuantity = 10,
+            --             },
+            --             -- {
+            --             --     item = "raw_meat",
+            --             --     chance = 100,
+            --             --     maxQuantity = 10,
+            --             -- },
+            --         },
+            --         extra = { -- rare items
+            --             {
+            --                 item = "deer_horn",
+            --                 chance = 30,
+            --                 maxQuantity = 1,
+            --             },
+            --             -- {
+            --             --     item = "deer_horn",
+            --             --     chance = 30,
+            --             --     maxQuantity = 1,
+            --             -- },
+            --         }
+
+            --     }
+            -- },
         }
-    }
+    },
+    -- ["CHILIAD_MOUNTAINS2"] = {
+    --     coords = vec3(1125.88, 4622.2, 80.08),
+    --     radius = 200.0,
+    --     maxSpawns = 5,                                                  -- max animals spawned at one time
+    --     allowedWeapons = { "WEAPON_HEAVYSNIPER_MK2", "WEAPON_DAGGER" }, -- nil if you want to allow every weapon
+    --     blip = {
+    --         enable = true,
+    --         color = 1,
+    --         opacity = 128,
+    --     },
+    --     animals = {
+    --         {
+    --             model = "a_c_deer",
+    --             chance = 80, -- chance of spawning
+    --             harvestTime = 5,
+    --             harvestWeapons = { "WEAPON_DAGGER" },
+    --             blip = {
+    --                 enable = true,
+    --                 name = 'Deer',
+    --                 type = 8,
+    --                 scale = 0.8,
+    --                 color = 1,
+    --             },
+    --             marker = {
+    --                 enable = true,
+    --                 color = { r = 196, g = 136, b = 77, a = 150 }
+    --             },
+    --             items = {
+    --                 skins = {
+    --                     {
+    --                         item = "skin_deer_ruined",
+    --                         chance = 70,
+    --                         maxQuantity = 1,
+    --                     },
+    --                     {
+    --                         item = "skin_deer_low",
+    --                         chance = 50,
+    --                         maxQuantity = 1,
+    --                     },
+    --                     {
+    --                         item = "skin_deer_medium",
+    --                         chance = 30,
+    --                         maxQuantity = 1,
+    --                     },
+    --                     {
+    --                         item = "skin_deer_good",
+    --                         chance = 25,
+    --                         maxQuantity = 1,
+    --                     },
+    --                     {
+    --                         item = "skin_deer_perfect",
+    --                         chance = 5,
+    --                         maxQuantity = 1,
+    --                     },
+    --                 },
+    --                 meat = {
+    --                     {
+    --                         item = "raw_meat",
+    --                         chance = 100,
+    --                         maxQuantity = 10,
+    --                     },
+    --                     -- {
+    --                     --     item = "raw_meat",
+    --                     --     chance = 100,
+    --                     --     maxQuantity = 10,
+    --                     -- },
+    --                 },
+    --                 extra = { -- rare items
+    --                     {
+    --                         item = "deer_horn",
+    --                         chance = 30,
+    --                         maxQuantity = 1,
+    --                     },
+    --                     -- {
+    --                     --     item = "deer_horn",
+    --                     --     chance = 30,
+    --                     --     maxQuantity = 1,
+    --                     -- },
+    --                 }
+
+    --             }
+    --         },
+    --         -- {
+    --         --     model = "a_c_deer",
+    --         --     chance = 80, -- chance of spawning
+    --         --     harvestTime = 5,
+    --         --     harvestWeapons = { "WEAPON_DAGGER" },
+    --         --     blip = {
+    --         --         enable = true,
+    --         --         name = 'Deer',
+    --         --         type = 8,
+    --         --         scale = 0.8,
+    --         --         color = 1,
+    --         --     },
+    --         --     marker = {
+    --         --         enable = true,
+    --         --         color = { r = 196, g = 136, b = 77, a = 150 }
+    --         --     },
+    --         --     items = {
+    --         --         skins = {
+    --         --             {
+    --         --                 item = "skin_deer_ruined",
+    --         --                 chance = 70,
+    --         --                 maxQuantity = 1,
+    --         --             },
+    --         --             {
+    --         --                 item = "skin_deer_low",
+    --         --                 chance = 50,
+    --         --                 maxQuantity = 1,
+    --         --             },
+    --         --             {
+    --         --                 item = "skin_deer_medium",
+    --         --                 chance = 30,
+    --         --                 maxQuantity = 1,
+    --         --             },
+    --         --             {
+    --         --                 item = "skin_deer_good",
+    --         --                 chance = 25,
+    --         --                 maxQuantity = 1,
+    --         --             },
+    --         --             {
+    --         --                 item = "skin_deer_perfect",
+    --         --                 chance = 5,
+    --         --                 maxQuantity = 1,
+    --         --             },
+    --         --         },
+    --         --         meat = {
+    --         --             {
+    --         --                 item = "raw_meat",
+    --         --                 chance = 100,
+    --         --                 maxQuantity = 10,
+    --         --             },
+    --         --             -- {
+    --         --             --     item = "raw_meat",
+    --         --             --     chance = 100,
+    --         --             --     maxQuantity = 10,
+    --         --             -- },
+    --         --         },
+    --         --         extra = { -- rare items
+    --         --             {
+    --         --                 item = "deer_horn",
+    --         --                 chance = 30,
+    --         --                 maxQuantity = 1,
+    --         --             },
+    --         --             -- {
+    --         --             --     item = "deer_horn",
+    --         --             --     chance = 30,
+    --         --             --     maxQuantity = 1,
+    --         --             -- },
+    --         --         }
+
+    --         --     }
+    --         -- },
+    --     }
+    -- },
+
 }
 
 -- _____  _
@@ -209,7 +471,75 @@ Config.Shops = {
             }
 
         }
-    }
+    },
+    -- ["HuntGear Store2"] = {
+    --     coords = vector4(967.6, -2121.12, 30.48, 86.84),
+    --     ped = {
+    --         enable = Config.Target and true or true, -- false the last bool to dont use ped
+    --         model = "s_m_m_ammucountry"
+    --     },
+    --     blip = {
+    --         enable = true,
+    --         type = 59,
+    --         scale = 0.7,
+    --         color = 5,
+    --     },
+    --     useDrawText = true,
+    --     items = {
+    --         sell = {
+    --             {
+    --                 item = "skin_deer_ruined",
+    --                 price = 250,
+    --                 label = "Tattered Deer Pelt"
+
+    --             },
+    --             {
+    --                 item = "skin_deer_low",
+    --                 price = 500,
+    --                 label = "Worn Deer Pelt"
+
+    --             },
+    --             {
+    --                 item = "skin_deer_medium",
+    --                 price = 700,
+    --                 label = "Supple Deer Pelt"
+
+
+    --             },
+    --             {
+    --                 item = "skin_deer_good",
+    --                 price = 1200,
+    --                 label = "Prime Deer Pelt"
+
+    --             },
+    --             {
+    --                 item = "skin_deer_perfect",
+    --                 price = 2250,
+    --                 label = "Flawless Deer Pelt"
+
+
+    --             },
+    --         },
+    --         buy = {
+    --             {
+    --                 item = "huntingbait",
+    --                 label = "hunting Bait",
+    --                 price = 250,
+    --             },
+    --             {
+    --                 item = "campfire",
+    --                 label = "Campfire",
+    --                 price = 750,
+    --             },
+    --             {
+    --                 item = "animal_tracker",
+    --                 label = "Animal Tracker",
+    --                 price = 10050,
+    --             },
+    --         }
+
+    --     }
+    -- }
 }
 
 

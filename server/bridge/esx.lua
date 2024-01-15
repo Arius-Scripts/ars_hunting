@@ -16,13 +16,28 @@ function framework.addItems(data)
     end
 end
 
+function framework.hasMoney(target)
+    local xPlayer = ESX.GetPlayerFromId(target)
+    return xPlayer.getMoney()
+end
+
+function framework.addMoney(data)
+    local xPlayer = ESX.GetPlayerFromId(data.target)
+    xPlayer.addMoney(data.amount)
+end
+
+function framework.removeMoney(data)
+    local xPlayer = ESX.GetPlayerFromId(data.target)
+    xPlayer.removeMoney(data.amount)
+end
+
 function framework.hasItems(data)
     local xPlayer = ESX.GetPlayerFromId(data.target)
 
     if type(data.items) == "table" then
         for _, item in pairs(data.items) do
             local hasItem = xPlayer.getInventoryItem(item.item)
-
+            if not hasItem then return false end
 
             if hasItem.count >= item.quantity then return true end
         end

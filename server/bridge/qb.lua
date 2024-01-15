@@ -16,12 +16,28 @@ function framework.addItems(data)
     end
 end
 
+function framework.hasMoney(target)
+    local xPlayer = QBCore.Functions.GetPlayer(target)
+    return xPlayer.PlayerData.money.cash
+end
+
+function framework.addMoney(data)
+    local xPlayer = QBCore.Functions.GetPlayer(data.target)
+    xPlayer.Functions.AddMoney('cash', data.amount)
+end
+
+function framework.removeMoney(data)
+    local xPlayer = QBCore.Functions.GetPlayer(data.target)
+    xPlayer.Functions.RemoveMoney('cash', data.amount)
+end
+
 function framework.hasItems(data)
     local xPlayer = QBCore.Functions.GetPlayer(data.target)
 
     if type(data.items) == "table" then
         for _, item in pairs(data.items) do
             local hasItem = xPlayer.Functions.GetItemByName(item.item)
+            if not hasItem then return false end
 
             if hasItem?.amount >= item.quantity then return true end
         end

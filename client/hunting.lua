@@ -1,4 +1,4 @@
-local currentZone = nil
+currentZone = nil
 local spawnedEntities = 0
 entities = {}
 
@@ -16,16 +16,24 @@ end
 
 lib.onCache('weapon', function(value)
     if value then
-        if currentZone and currentZone.allowedWeapons then
-            if not utils.validWeapon(currentZone.allowedWeapons, value) then
-                lib.alertDialog({
-                    header = locale("weapon_not_allowed_title"),
-                    content = locale("weapon_not_allowed_content"),
-                    centered = true,
-                    cancel = false
-                })
+        if currentZone then
+            if Config.UseAimBlock then
+                if utils.validWeapon(Config.WeaponsToBlock, value) then
+                    aimBlock()
+                end
+            end
 
-                disableWeapon()
+            if currentZone.allowedWeapons then
+                if not utils.validWeapon(currentZone.allowedWeapons, value) then
+                    lib.alertDialog({
+                        header = locale("weapon_not_allowed_title"),
+                        content = locale("weapon_not_allowed_content"),
+                        centered = true,
+                        cancel = false
+                    })
+
+                    disableWeapon()
+                end
             end
         end
     end
@@ -123,7 +131,8 @@ local function spawnEntities()
 
                             if dist <= (tracker and 400.0 or 30.0) then
                                 sleep = 0
-                                DrawMarker(tracker and 1 or 23, entityCoords.x, entityCoords.y, entityCoords.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.2, 2.0, tracker and 100.0 or 1.0, marker.color.r, marker.color.g, marker.color.b, tracker and 155 or marker.color.a, false, true, 2, false, nil, nil, false)
+                                DrawMarker(tracker and 1 or 23, entityCoords.x, entityCoords.y, entityCoords.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.2, 2.0, tracker and 100.0 or 1.0, marker.color.r, marker.color.g, marker.color.b, tracker and 155 or marker.color.a, false, true, 2, false, nil, nil,
+                                    false)
                             end
                         end
 
@@ -265,9 +274,14 @@ for zoneName, zoneData in pairs(Config.HuntingZones) do
         debug = Config.Debug
     })
 
-    if zoneData.blip.enable then
-        utils.createZoneBlip({ coords = zoneData.coords, radius = zoneData.radius, color = zoneData.blip.color, alpha = zoneData.blip.opacity })
+    if zoneData.zone_radius.enable then
+        utils.createZoneBlip({ coords = zoneData.coords, radius = zoneData.radius, color = zoneData.zone_radius.color, alpha = zoneData.zone_radius.opacity })
         utils.debug("Zone Blip Created")
+    end
+    if zoneData.blip.enable then
+        zoneData.blip.pos = zoneData.coords
+        utils.createBlip(zoneData.blip)
+        utils.debug("Blip Created")
     end
 
     function zone:onEnter()
@@ -346,13 +360,17 @@ local function trackAnimal()
 
             SetTimeout(Config.DelayBetweenTracks * 1000, function()
                 canTrack = true
-                entities[closestEntityIndex].track = nil
+                if entities[closestEntityIndex] then
+                    entities[closestEntityIndex].track = nil
+                end
             end)
 
             SetTimeout(Config.TrackingDuration * 1000, function()
                 DisplayRadar(false)
                 canTrack = true
-                entities[closestEntityIndex].track = nil
+                if entities[closestEntityIndex] then
+                    entities[closestEntityIndex].track = nil
+                end
             end)
 
             utils.showNotification(locale("animal_tracked"))

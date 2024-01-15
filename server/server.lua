@@ -1,17 +1,21 @@
 function getRarity(items)
     local chance = math.random(1, 100)
-    local itemToGive = nil
+    local eligibleItems = {}
 
     for _, item in pairs(items) do
         if item.chance >= chance then
-            itemToGive = item
-            break
+            print(item.item, item.chance, chance)
+            table.insert(eligibleItems, item)
         end
     end
 
-    if itemToGive then return itemToGive end
-
-    return getRarity(items)
+    if #eligibleItems > 0 then
+        local selectedIdx = math.random(1, #eligibleItems)
+        print(selectedIdx)
+        return eligibleItems[selectedIdx]
+    else
+        return getRarity(items)
+    end
 end
 
 RegisterNetEvent("ars_hunting:harvestAnimal", function(data)
@@ -53,8 +57,8 @@ end)
 RegisterNetEvent("ars_hunting:sellBuyItem", function(data)
     local source = source
     if data.buy then
-        if framework.hasItems({ target = source, items = { { item = "money", quantity = data.price } } }) then
-            framework.removeItem({ target = source, item = "money", count = data.price })
+        if framework.hasMoney(source) >= data.price then
+            framework.removeMoney({ target = source, amount = data.price })
             framework.addItems({ target = source, items = { { item = data.item, quantity = data.quantity } } })
         else
             TriggerClientEvent("ars_hunting:showNotification", source, locale("not_enough_money"))
@@ -62,7 +66,7 @@ RegisterNetEvent("ars_hunting:sellBuyItem", function(data)
     else
         if framework.hasItems({ target = source, items = { { item = data.item, quantity = data.quantity } } }) then
             framework.removeItem({ target = source, item = data.item, count = data.quantity })
-            framework.addItems({ target = source, items = { { item = "money", quantity = data.price } } })
+            framework.addMoney({ target = source, amount = data.price })
         else
             TriggerClientEvent("ars_hunting:showNotification", source, locale("not_enough_item"))
         end
@@ -107,3 +111,5 @@ end)
 lib.callback.register('ars_hunting:hasItems', function(source, items)
     return framework.hasItems({ target = source, items = items })
 end)
+
+lib.versionCheck('Arius-Development/ars_hunting')
