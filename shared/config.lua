@@ -103,7 +103,7 @@ Config.HuntingZones = {
                 blip = {
                     enable = true,
                     name = 'Deer',
-                    type = 8,
+                    type = 119,
                     scale = 0.8,
                     color = 1,
                 },
