@@ -425,7 +425,7 @@ local function placeBait()
                         utils.showNotification(locale("animal_near_bait"))
                     end
 
-                    if dist_2 <= 5.0 then
+                    if dist_2 <= 2.0 then
                         notifSent = false
                         DeleteEntity(prop)
                         TaskWanderStandard(entity.entity)
