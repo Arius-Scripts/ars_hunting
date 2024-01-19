@@ -11,10 +11,13 @@ Config.TrackingDuration = 60      -- seconds
 Config.DelayBetweenTracks = 120   -- seconds
 Config.TrackingFailureChance = 20 -- [1 - 100]
 
-Config.UseAimBlock = true         -- disable shooting at players
-Config.WeaponsToBlock = {         -- weapons that are disabled to shoot at players
-    `WEAPON_HEAVYSNIPER_MK2`,
-    -- `WEAPON_HEAVYSNIPER`,
+Config.AimBlock = {
+    enable = true,
+    global = true,     -- false if you want to have aimblock only in hunting zones
+    weaponsToBlock = { -- weapons that are disabled to shoot at players
+        `WEAPON_HEAVYSNIPER_MK2`,
+        -- `WEAPON_HEAVYSNIPER`,
+    }
 }
 
 Config.BaitItem = "huntingbait"
@@ -100,7 +103,7 @@ Config.HuntingZones = {
                 blip = {
                     enable = true,
                     name = 'Deer',
-                    type = 8,
+                    type = 119,
                     scale = 0.8,
                     color = 1,
                 },

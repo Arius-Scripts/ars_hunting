@@ -16,13 +16,22 @@ end
 
 lib.onCache('weapon', function(value)
     if value then
-        if currentZone then
-            if Config.UseAimBlock then
-                if utils.validWeapon(Config.WeaponsToBlock, value) then
-                    aimBlock()
+        if Config.AimBlock.enable then
+            if Config.AimBlock.global then
+                if utils.validWeapon(Config.AimBlock.weaponsToBlock, value) then
+                    aimBlock(Config.AimBlock.global)
+                end
+            else
+                if currentZone then
+                    if utils.validWeapon(Config.AimBlock.weaponsToBlock, value) then
+                        aimBlock(Config.AimBlock.global)
+                    end
                 end
             end
+        end
 
+
+        if currentZone then
             if currentZone.allowedWeapons then
                 if not utils.validWeapon(currentZone.allowedWeapons, value) then
                     lib.alertDialog({
@@ -416,7 +425,7 @@ local function placeBait()
                         utils.showNotification(locale("animal_near_bait"))
                     end
 
-                    if dist_2 <= 5.0 then
+                    if dist_2 <= 2.0 then
                         notifSent = false
                         DeleteEntity(prop)
                         TaskWanderStandard(entity.entity)
