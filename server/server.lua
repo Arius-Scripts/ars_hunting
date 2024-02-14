@@ -82,8 +82,10 @@ RegisterNetEvent("ars_hunting:finishMission", function(data)
 
     framework.addItems({ target = source, items = data.rewards })
 
-    for _, item in pairs(data.requirements) do
-        framework.removeItem({ target = source, item = item.item, count = item.quantity })
+    if data.requirements then
+        for _, item in pairs(data.requirements) do
+            framework.removeItem({ target = source, item = item.item, count = item.quantity })
+        end
     end
 end)
 
