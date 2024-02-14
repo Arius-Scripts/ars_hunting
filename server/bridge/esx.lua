@@ -6,13 +6,16 @@ framework = {}
 
 function framework.addItems(data)
     local xPlayer = ESX.GetPlayerFromId(data.target)
-
     if type(data.items) == "table" then
         for _, item in pairs(data.items) do
-            xPlayer.addInventoryItem(item.item, (item?.quantity or 1))
+            if xPlayer.canCarryItem(item.item, item?.quantity or 1) then
+                xPlayer.addInventoryItem(item.item, (item?.quantity or 1))
+            end
         end
     else
-        xPlayer.addInventoryItem(data.items, 1)
+        if xPlayer.canCarryItem(data.items, 1) then
+            xPlayer.addInventoryItem(data.items, 1)
+        end
     end
 end
 
